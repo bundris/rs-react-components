@@ -28,3 +28,18 @@ export interface IResults {
   };
   results: ICharacter[];
 }
+
+export interface IAppState {
+  cards: ICharacter[];
+  loading: boolean;
+  error: boolean;
+  errorMsg: string;
+}
+
+export interface SearchProps {
+  updateData: () => void;
+}
+
+export interface SearchState {
+  value: string;
+}
