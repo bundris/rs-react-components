@@ -41,6 +41,8 @@
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-var-requires": "off",
+    "react/prefer-stateless-function": [0, { "ignorePureComponents": true }],
+    "react/state-in-constructor": "off",
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": 0,
     "import/no-extraneous-dependencies": [
