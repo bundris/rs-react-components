@@ -32,8 +32,6 @@ export interface IResults {
 export interface IAppState {
   cards: ICharacter[];
   loading: boolean;
-  error: boolean;
-  errorMsg: string;
 }
 
 export interface SearchProps {
@@ -42,4 +40,9 @@ export interface SearchProps {
 
 export interface SearchState {
   value: string;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: string;
 }

@@ -3,6 +3,8 @@ import Search from './components/Search/Search';
 import CardList from './components/CardList/CardList';
 import { IAppState } from './utils/types';
 import handleSearchClick from './utils/utils';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import ErrorButton from './components/ErrorButton/ErrorButton';
 
 class App extends React.Component<object, IAppState> {
   constructor(props: object) {
@@ -10,8 +12,6 @@ class App extends React.Component<object, IAppState> {
     this.state = {
       cards: [],
       loading: true,
-      error: false,
-      errorMsg: '',
     };
   }
 
@@ -25,10 +25,11 @@ class App extends React.Component<object, IAppState> {
       apiUrl += `/?name=${query}`;
     }
     this.setState({ loading: true });
+
     fetch(apiUrl)
       .then((data) => {
         if (!data.ok) {
-          throw new Error('Morty failed');
+          throw new Error('Morty failed, wrong name');
         }
         return data.json();
       })
@@ -36,17 +37,14 @@ class App extends React.Component<object, IAppState> {
         this.setState({
           cards: data.results,
           loading: false,
-          error: false,
-          errorMsg: '',
         });
       })
       .catch((e) => {
         this.setState({
           cards: [],
           loading: false,
-          error: true,
-          errorMsg: e.message,
         });
+        throw Error(e.toString());
       });
   };
 
@@ -57,15 +55,15 @@ class App extends React.Component<object, IAppState> {
   };
 
   render() {
-    const { cards, loading, error, errorMsg } = this.state;
+    const { cards, loading } = this.state;
     return (
-      <>
+      <ErrorBoundary>
         <Search updateData={this.updateData} />
-        {error && <div>{errorMsg}</div>}
+        <ErrorButton />
         {Boolean(cards) && cards.length > 0 && (
           <CardList loading={loading} cards={cards} />
         )}
-      </>
+      </ErrorBoundary>
     );
   }
 }
