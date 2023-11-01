@@ -16,7 +16,8 @@ class App extends React.Component<object, IAppState> {
   }
 
   componentDidMount() {
-    this.fetchData();
+    const lsValue = localStorage.getItem('search_request') ?? '';
+    this.fetchData(lsValue);
   }
 
   fetchData = (query?: string) => {
