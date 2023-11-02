@@ -1,29 +1,21 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-class ErrorButton extends Component {
-  static triggerError = (): void => {
+function ErrorButton() {
+  const [errState, setError] = useState(false);
+  const triggerError = (): void => {
     throw new Error('Morty, you failed again');
   };
 
-  state = {
-    errorBtnPressed: false,
+  const handleClick = () => {
+    setError(true);
   };
 
-  handleClick = () => {
-    this.setState({
-      errorBtnPressed: true,
-    });
-  };
-
-  render() {
-    const { errorBtnPressed } = this.state;
-    errorBtnPressed ? ErrorButton.triggerError() : '';
-    return (
-      <button type="button" onClick={this.handleClick}>
-        Error generator
-      </button>
-    );
-  }
+  errState ? triggerError() : '';
+  return (
+    <button type="button" onClick={handleClick}>
+      Error generator
+    </button>
+  );
 }
 
 export default ErrorButton;

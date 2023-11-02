@@ -35,6 +35,7 @@ export interface IAppState {
 }
 
 export interface SearchProps {
+  query: string;
   updateData: () => void;
 }
 
