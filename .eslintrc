@@ -34,6 +34,7 @@
     "comma-dangle": ["error", "only-multiline"],
     "react/prop-types": "off",
     "react/display-name": "off",
+    "import/prefer-default-export": "off",
     "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/ban-ts-comment": "error",
     "@typescript-eslint/no-non-null-assertion": "off",
