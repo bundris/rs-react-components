@@ -4,7 +4,6 @@ import CardList from './components/CardList/CardList';
 import { ICharacter } from './utils/types';
 import { saveSearchQuery } from './utils/localstorageService';
 import { fetchData } from './utils/RMService';
-import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import ErrorButton from './components/ErrorButton/ErrorButton';
 
 function App() {
@@ -33,13 +32,13 @@ function App() {
   };
 
   return (
-    <ErrorBoundary>
+    <>
       <Search query={query} updateData={updateData} />
       <ErrorButton />
       {Boolean(cards) && cards.length > 0 && (
         <CardList loading={loading} cards={cards} />
       )}
-    </ErrorBoundary>
+    </>
   );
 }
 
