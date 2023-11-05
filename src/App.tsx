@@ -13,20 +13,21 @@ function App() {
   );
   const [cards, setCards] = useState<ICharacter[]>([]);
   const [loading, setLoading] = useState(false);
-  const { pageNum } = useParams();
+  const params = useParams();
   useEffect(() => {
     setLoading(true);
-    RMAPI.fetchPage(query, pageNum)
+    RMAPI.fetchPage(query, params.page)
       .then((data) => {
-        setLoading(false);
-        setCards(data.results);
+        setCards(data);
       })
       .catch((e) => {
         setCards([]);
-        setLoading(false);
         throw Error(e.toString());
+      })
+      .finally(() => {
+        setLoading(false);
       });
-  }, [query, pageNum]);
+  }, [query, params]);
 
   const updateData = () => {
     setQuery(saveSearchQuery());
@@ -34,8 +35,8 @@ function App() {
 
   return (
     <>
-      <Search query={query} updateData={updateData} />
       <ErrorButton />
+      <Search query={query} updateData={updateData} />
       <main className="content">
         {Boolean(cards) && cards.length > 0 && (
           <CardList loading={loading} cards={cards} />
