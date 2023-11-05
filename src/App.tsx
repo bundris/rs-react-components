@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Outlet, useParams } from 'react-router-dom';
 import Search from './components/Search/Search';
 import CardList from './components/CardList/CardList';
 import { ICharacter } from './utils/types';
 import { saveSearchQuery } from './utils/localstorageService';
-import { fetchData } from './utils/RMService';
+import { RMAPI } from './utils/RMService';
 import ErrorButton from './components/ErrorButton/ErrorButton';
 
 function App() {
@@ -12,10 +13,10 @@ function App() {
   );
   const [cards, setCards] = useState<ICharacter[]>([]);
   const [loading, setLoading] = useState(false);
-
+  const { pageNum } = useParams();
   useEffect(() => {
     setLoading(true);
-    fetchData(query)
+    RMAPI.fetchPage(query, pageNum)
       .then((data) => {
         setLoading(false);
         setCards(data.results);
@@ -25,7 +26,7 @@ function App() {
         setLoading(false);
         throw Error(e.toString());
       });
-  }, [query]);
+  }, [query, pageNum]);
 
   const updateData = () => {
     setQuery(saveSearchQuery());
@@ -35,9 +36,12 @@ function App() {
     <>
       <Search query={query} updateData={updateData} />
       <ErrorButton />
-      {Boolean(cards) && cards.length > 0 && (
-        <CardList loading={loading} cards={cards} />
-      )}
+      <main className="content">
+        {Boolean(cards) && cards.length > 0 && (
+          <CardList loading={loading} cards={cards} />
+        )}
+        <Outlet />
+      </main>
     </>
   );
 }
