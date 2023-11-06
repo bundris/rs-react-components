@@ -1,0 +1,18 @@
+.card__item {
+  grid-column: span 1;
+  border: 1px solid #535bf2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.card__item-image {
+  border-radius: 50%;
+  overflow: hidden;
+}
+.card__item-name {
+  text-align: center;
+}
+.card__item-status {
+  text-align: center;
+  background-color: #535bf2;
+}

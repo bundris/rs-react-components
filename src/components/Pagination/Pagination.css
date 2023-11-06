@@ -1,0 +1,11 @@
+.pages-list {
+  display: flex;
+  flex-direction: row;
+}
+
+.pages-item {
+  display: block;
+  background-color: dimgrey;
+  inline-size: 20px;
+  block-size: 20px;
+}
