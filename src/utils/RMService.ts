@@ -1,7 +1,9 @@
+import { ICharacter } from './types';
+
 class RickAndMortyAPI {
   baseUrl = `https://rickandmortyapi.com/api/character`;
 
-  defaultPageSize = 20;
+  defaultPageSize = 20; // fixed for rick and morty API
 
   pageSize = 20;
 
@@ -35,13 +37,14 @@ class RickAndMortyAPI {
     apiUrl += `/?${
       query ? `name=${query}&page=${realPage}` : `page=${realPage}`
     }`;
-    const data = await RickAndMortyAPI.fetchData(apiUrl).then(
-      (res) => res.results
-    );
+    const data = await RickAndMortyAPI.fetchData(apiUrl).then((res) => {
+      this.maxPage = res.info.count / this.pageSize;
+      return res.results;
+    });
     return data.slice(realPos);
   }
 
-  async fetchCharacter(charId: string) {
+  async fetchCharacter(charId: string): Promise<ICharacter> {
     const apiUrl = `${this.baseUrl}/${charId}`;
     return RickAndMortyAPI.fetchData(apiUrl);
   }

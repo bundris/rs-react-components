@@ -1,5 +1,6 @@
 .card__list {
   width: 1200px;
+  flex: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 import Search from './components/Search/Search';
 import CardList from './components/CardList/CardList';
 import { ICharacter } from './utils/types';
 import { saveSearchQuery } from './utils/localstorageService';
 import { RMAPI } from './utils/RMService';
 import ErrorButton from './components/ErrorButton/ErrorButton';
+import './App.css';
 
 function App() {
   const [query, setQuery] = useState(
@@ -13,10 +14,11 @@ function App() {
   );
   const [cards, setCards] = useState<ICharacter[]>([]);
   const [loading, setLoading] = useState(false);
-  const params = useParams();
+  const [params] = useSearchParams();
+
   useEffect(() => {
     setLoading(true);
-    RMAPI.fetchPage(query, params.page)
+    RMAPI.fetchPage(query, String(params.get('page')))
       .then((data) => {
         setCards(data);
       })
@@ -41,7 +43,7 @@ function App() {
         {Boolean(cards) && cards.length > 0 && (
           <CardList loading={loading} cards={cards} />
         )}
-        <Outlet />
+        {params.get('details') && <Outlet />}
       </main>
     </>
   );
